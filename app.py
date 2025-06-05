@@ -27,21 +27,15 @@ st.markdown("""
     .stNumberInput, .stSelectbox {
         margin-bottom: 15px;
     }
-    .prediction-box {
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 30px;
-        margin-left: 250px;
-        text-align: center;
-        color:#34eb3a;
-    }
-    .approved {
-        background-color: #000000;
+    .approved-text {
         color: #34eb3a;
+        font-size: 32px;
+        text-align: center;
     }
-    .rejected {
-        background-color: #000000;
-        color: #721c24;
+    .rejected-text {
+        color: #ff0000;
+        font-size: 32px;
+        text-align: center;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -106,18 +100,20 @@ with predict_col:
             status = "Approved" if result == "Y" else "Rejected"
             
             # Styled prediction result
-            st.balloons()
-            css_class = "approved" if status == "Approved" else "rejected"
-            st.markdown(
-                f'<div class="prediction-box {css_class}">'
-                f'<h2>Loan Status: {status}!</h2>'
-                f'</div>', 
-                unsafe_allow_html=True
-            )
+            if status == "Approved":
+                st.balloons()
+                st.success("Loan Approved! 🎉")
+            else:
+                st.error("Loan Rejected! ❌")
+            
+            # css_class = "approved-text" if status == "Approved" else "rejected-text"
+            # st.markdown(
+            #     f'<h2 class="{css_class}">Loan Status: {status}!</h2>', 
+            #     unsafe_allow_html=True
+            # )
             
         except Exception as e:
             st.error(f"Error making prediction: {str(e)}")
-
 # Footer
 st.write("---")
 st.markdown("""
